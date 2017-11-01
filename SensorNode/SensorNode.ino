@@ -37,12 +37,8 @@ void loop(void) {
   if(currentMillis - prevMillis >= interval)
   {
     prevMillis = currentMillis;
-    Hum = analogRead(A0);                                         //Read analog values from the sensor
-    Hum = map(Hum,0,1024,0,100);                                  //map the analog values in the range 0-100
-    Hum = 100-Hum;                                                // invert the values since the sensor gives higher reading at dry state & vice versa
-    float HumPer = (float)((Hum-1)*100)/(99);                     // convert the reading into % form
     
-    Serial.println(HumPer);                                       //print on serial monitor
+    float HumPer = humidity();
   
     String HumPerS = String(HumPer);                              // Convert % humidity into string
     int HumSize = HumPerS.length();                               // Check the size of string  
@@ -65,3 +61,12 @@ void loop(void) {
     }  
    
 }
+float humidity(){
+    Hum = analogRead(A0);                                         //Read analog values from the sensor
+    Hum = map(Hum,0,1024,0,100);                                  //map the analog values in the range 0-100
+    Hum = 100-Hum;                                                // invert the values since the sensor gives higher reading at dry state & vice versa
+    float HumPer = (float)((Hum-1)*100)/(99);                     // convert the reading into % form
+    Serial.println(HumPer);                                       //print on serial monitor
+    return HumPer;
+}
+
